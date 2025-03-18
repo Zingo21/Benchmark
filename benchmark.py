@@ -1,6 +1,6 @@
 import tkinter as tk
 import time
-from turtle import update
+from turtle import end_fill, update
 from unittest import result
 import psutil
 import cupy as cp
@@ -26,5 +26,18 @@ def benchmark_ram():
     ram_results.append(ram_usage)
     update_plot()
     result_label.config(text=f"RAM-test: {ram_usage}%")
+
+def benchmark_gpu():
+    try:
+        start = time.time()
+        x = cp.ones((1000, 1000))
+        x.dot(x)
+        end = time.time()
+        gpu_time = end - start
+        gpu_results.append(gpu_time)
+        update_plot()
+        result_label.config(text=f"GPU-test: {gpu_time:.4f} sec")
+    except Exception as e:
+        result_label.config(text=f"GPU-test failed: {e}")
 
 
