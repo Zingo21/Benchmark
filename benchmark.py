@@ -21,4 +21,10 @@ def benchmark_cpu():
     update_plot()
     result_label.config(text=f"CPU-test: {cpu_time:.4f} sec")
 
-    
+def benchmark_ram():
+    ram_usage = psutil.virtual_memory().percent
+    ram_results.append(ram_usage)
+    update_plot()
+    result_label.config(text=f"RAM-test: {ram_usage}%")
+
+
