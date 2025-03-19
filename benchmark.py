@@ -1,7 +1,5 @@
 import tkinter as tk
 import time
-from turtle import end_fill, update
-from unittest import result
 import psutil
 import cupy as cp
 import matplotlib.pyplot as plt
@@ -40,4 +38,30 @@ def benchmark_gpu():
     except Exception as e:
         result_label.config(text=f"GPU-test failed: {e}")
 
+def update_plot():
+    ax.clear()
+    ax.plot(cpu_results, label="CPU")
+    ax.plot(ram_results, label="RAM")
+    ax.plot(gpu_results, label="GPU")
+    ax.legend()
+    canvas.draw()
 
+# GUI
+root = tk.Tk()
+root.title("Benchmark")
+
+tk.Label(root, text="Select benchmark").pack(pady=5)
+
+tk.Button(root, text="Test CPU", command=benchmark_cpu).pack(pady=5)
+tk.Button(root, text="Test RAM", command=benchmark_ram).pack(pady=5)
+tk.Button(root, text="Test GPU", command=benchmark_gpu).pack(pady=5)
+
+result_label = tk.Label(root, text="Results are shown here")
+result_label.pack(pady=10)
+
+# Matplotlib plot
+fig, ax = plt.subplots(figsize=(5, 3))
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas.get_tk_widget().pack()
+
+root.mainloop()
