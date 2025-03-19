@@ -1,7 +1,7 @@
 import tkinter as tk
 import time
 import psutil
-import cupy as cp
+#import cupy as cp
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -25,24 +25,24 @@ def benchmark_ram():
     update_plot()
     result_label.config(text=f"RAM-test: {ram_usage}%")
 
-def benchmark_gpu():
-    try:
-        start = time.time()
-        x = cp.ones((1000, 1000))
-        x.dot(x)
-        end = time.time()
-        gpu_time = end - start
-        gpu_results.append(gpu_time)
-        update_plot()
-        result_label.config(text=f"GPU-test: {gpu_time:.4f} sec")
-    except Exception as e:
-        result_label.config(text=f"GPU-test failed: {e}")
+#def benchmark_gpu():
+#    try:
+#        start = time.time()
+#        x = cp.ones((1000, 1000))
+#        x.dot(x)
+#        end = time.time()
+#        gpu_time = end - start
+#        gpu_results.append(gpu_time)
+#        update_plot()
+#        result_label.config(text=f"GPU-test: {gpu_time:.4f} sec")
+#    except Exception as e:
+#        result_label.config(text=f"GPU-test failed: {e}")
 
 def update_plot():
     ax.clear()
     ax.plot(cpu_results, label="CPU")
     ax.plot(ram_results, label="RAM")
-    ax.plot(gpu_results, label="GPU")
+#    ax.plot(gpu_results, label="GPU")
     ax.legend()
     canvas.draw()
 
@@ -54,7 +54,7 @@ tk.Label(root, text="Select benchmark").pack(pady=5)
 
 tk.Button(root, text="Test CPU", command=benchmark_cpu).pack(pady=5)
 tk.Button(root, text="Test RAM", command=benchmark_ram).pack(pady=5)
-tk.Button(root, text="Test GPU", command=benchmark_gpu).pack(pady=5)
+#tk.Button(root, text="Test GPU", command=benchmark_gpu).pack(pady=5)
 
 result_label = tk.Label(root, text="Results are shown here")
 result_label.pack(pady=10)
